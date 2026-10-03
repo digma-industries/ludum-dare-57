@@ -66,6 +66,15 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var terminal_velocity = 350.0
 ## Haul
 var haul_penalty = 0.5
+## Camera
+# how far the camera shifts down when peeking (in px)
+var peek_distance = 90.0
+# how long down must be held before the camera starts peeking (in seconds)
+var peek_delay = 0.75
+# how quickly the camera eases down into the peek
+var peek_speed = 2.0
+# how quickly the camera eases back up when the peek ends
+var peek_return_speed = 6.0
 
 ###### STATE ######
 ## State changes constantly as you are performing actions
@@ -93,6 +102,9 @@ var is_jetpacking = false
 var facing_right = true
 ## Gonst
 var has_gonster = false
+## Camera
+# how long down has been held while on the ground
+var peek_hold_time = 0.0
 
 func _ready():
   $AnimatedSprite2D.play()
@@ -104,6 +116,19 @@ func _physics_process(delta):
   _process_heat(delta)
   _process_digging(delta)
   _process_animation()
+  _process_camera_peek(delta)
+
+func _process_camera_peek(delta: float):
+  # can only peek down while standing on solid ground
+  if is_on_floor() && Input.is_action_pressed("look_down"):
+    peek_hold_time += delta
+  else:
+    peek_hold_time = 0.0
+
+  var is_peeking = peek_hold_time >= peek_delay
+  var target_offset_y = peek_distance if is_peeking else 0.0
+  var speed = peek_speed if is_peeking else peek_return_speed
+  $Camera2D.offset.y = lerp($Camera2D.offset.y, target_offset_y, 1.0 - exp(-speed * delta))
 
 func _process_animation():
   if velocity == Vector2(0, 0):
