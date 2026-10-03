@@ -105,6 +105,9 @@ var has_gonster = false
 ## Camera
 # how long down has been held while on the ground
 var peek_hold_time = 0.0
+## Shop
+# set by the shop while its menu is open, so clicking buttons doesn't dig
+var is_shopping = false
 
 func _ready():
   $AnimatedSprite2D.play()
@@ -223,7 +226,7 @@ func _process_digging(delta: float):
   if !is_digging && get_total_heat() / heat_capacity > 0.9:
     can_dig = false
 
-  if Input.is_action_pressed("primary_mouse_action") && can_dig:
+  if Input.is_action_pressed("primary_mouse_action") && can_dig && !is_shopping:
     var new_digging_tile = get_targeted_tile()
     if !new_digging_tile.is_diggable():
       # if it's not diggable, don't start diggin

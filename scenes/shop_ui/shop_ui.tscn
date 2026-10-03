@@ -1,72 +1,138 @@
-[gd_scene load_steps=4 format=3 uid="uid://837encs13ggh"]
+[gd_scene load_steps=5 format=3 uid="uid://837encs13ggh"]
 
 [ext_resource type="Script" uid="uid://mb61cud1laj6" path="res://scenes/shop_ui/shop_ui.gd" id="1_67u7h"]
 [ext_resource type="Theme" uid="uid://dmwt5ilifg3r8" path="res://assets/ui_theme.tres" id="2_u3gf3"]
-[ext_resource type="PackedScene" uid="uid://cvhcwsah45gpm" path="res://scenes/shop_ui/item_button.tscn" id="3_uaovo"]
+[ext_resource type="FontFile" uid="uid://dv6i58c4vidce" path="res://assets/fonts/NotoSansMono-SemiBold.ttf" id="3_mono"]
+[ext_resource type="AudioStream" uid="uid://m05dcrsxvl3w" path="res://assets/sounds/pickup_haul.wav" id="4_sound"]
 
 [node name="ShopUI" type="CanvasLayer"]
+layer = 2
 script = ExtResource("1_67u7h")
 
-[node name="Header" type="Label" parent="."]
-offset_top = 240.0
-offset_right = 720.0
-offset_bottom = 350.0
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -334.0
+offset_top = 150.0
+offset_right = 334.0
+offset_bottom = 150.0
+grow_horizontal = 2
 theme = ExtResource("2_u3gf3")
-theme_override_font_sizes/font_size = 80
+
+[node name="Content" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
 text = "Shop"
-horizontal_alignment = 1
 
-[node name="GearContainer" type="VBoxContainer" parent="."]
-offset_left = 15.0
-offset_top = 351.0
-offset_right = 705.0
-offset_bottom = 1021.0
-theme = ExtResource("2_u3gf3")
+[node name="Money" type="Label" parent="Panel/Content/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 0.827, 0.302, 1)
+theme_override_fonts/font = ExtResource("3_mono")
+theme_override_font_sizes/font_size = 36
+text = "$0"
+vertical_alignment = 1
 
-[node name="ItemButton" parent="GearContainer" instance=ExtResource("3_uaovo")]
+[node name="SoldLabel" type="Label" parent="Panel/Content"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.898, 0.314, 1)
+theme_override_font_sizes/font_size = 22
+text = "Sold haul: +$0"
 
-[node name="ItemButton2" parent="GearContainer" instance=ExtResource("3_uaovo")]
-visible = false
+[node name="Separator" type="HSeparator" parent="Panel/Content"]
 layout_mode = 2
 
-[node name="ItemButton3" parent="GearContainer" instance=ExtResource("3_uaovo")]
+[node name="GearContainer" type="VBoxContainer" parent="Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AllItemsPurchased" type="Label" parent="Panel/Content"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
-
-[node name="ItemButton4" parent="GearContainer" instance=ExtResource("3_uaovo")]
-visible = false
-layout_mode = 2
-
-[node name="ItemButton5" parent="GearContainer" instance=ExtResource("3_uaovo")]
-visible = false
-layout_mode = 2
-
-[node name="AllItemsPurchased" type="Label" parent="."]
-visible = false
-offset_top = 417.0
-offset_right = 720.0
-offset_bottom = 440.0
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 28
 text = "All items purchased!"
 horizontal_alignment = 1
 
-[node name="ItemTooltipBackground" type="Panel" parent="."]
-offset_left = 15.0
-offset_top = 581.0
-offset_right = 705.0
-offset_bottom = 696.0
-size_flags_vertical = 0
+[node name="Details" type="PanelContainer" parent="Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"InsetPanel"
 
-[node name="ItemTooltip" type="RichTextLabel" parent="."]
-offset_left = 24.0
-offset_top = 585.0
-offset_right = 696.0
-offset_bottom = 693.0
-theme_override_constants/outline_size = 0
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/normal_font_size = 24
+[node name="DetailsContent" type="VBoxContainer" parent="Panel/Content/Details"]
+custom_minimum_size = Vector2(0, 236)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ItemName" type="Label" parent="Panel/Content/Details/DetailsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Very Cool Item"
+
+[node name="FlavorQuote" type="PanelContainer" parent="Panel/Content/Details/DetailsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"FlavorQuote"
+
+[node name="Flavor" type="RichTextLabel" parent="Panel/Content/Details/DetailsContent/FlavorQuote"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(0.62, 0.62, 0.62, 1)
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "[i]Item description[/i]
-Stat bonuses"
+text = "[i]Flavor text[/i]"
+fit_content = true
+scroll_active = false
+
+[node name="Description" type="RichTextLabel" parent="Panel/Content/Details/DetailsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "What the item does"
+fit_content = true
+scroll_active = false
+
+[node name="Stats" type="RichTextLabel" parent="Panel/Content/Details/DetailsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/mono_font = ExtResource("3_mono")
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="Hint" type="Label" parent="Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 18
+text = "Enter to buy  ·  Esc or walk away to close"
+horizontal_alignment = 1
+
+[node name="PurchaseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sound")
