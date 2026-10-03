@@ -1,45 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbi1s0tx3b5vk"]
+[gd_scene format=3 uid="uid://dbi1s0tx3b5vk"]
 
 [ext_resource type="Script" uid="uid://bk710nk5wc8ta" path="res://scenes/main/main.gd" id="1_6q06x"]
 [ext_resource type="PackedScene" uid="uid://eduld2nd3eqw" path="res://scenes/player/player.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" path="res://scenes/starfield/starfield.tscn" id="2_yyfjg"]
 [ext_resource type="TileSet" uid="uid://dj57dgaexk3lc" path="res://assets/tiles.tres" id="3_6q06x"]
 [ext_resource type="Script" uid="uid://dwukm0d7mmuhx" path="res://scenes/main/tile_map.gd" id="3_ow5a4"]
 [ext_resource type="PackedScene" uid="uid://c8fpd8kkkwavg" path="res://scenes/shop/shop.tscn" id="4_ow5a4"]
 [ext_resource type="PackedScene" uid="uid://dfowoevuj1o11" path="res://scenes/hud/hud.tscn" id="5_6q06x"]
 [ext_resource type="PackedScene" uid="uid://c8esxak2il3ud" path="res://scenes/gas/gas.tscn" id="5_hujxm"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1342205661]
 script = ExtResource("1_6q06x")
 
-[node name="Sky" type="ColorRect" parent="."]
+[node name="Sky" type="ColorRect" parent="." unique_id=1089761324]
 offset_left = -373.0
 offset_top = -424.0
 offset_right = 1063.0
 offset_bottom = 656.0
 color = Color(3.91062e-08, 0.0942112, 0.0947127, 1)
 
-[node name="UndergroundTileMap" type="Node2D" parent="."]
+[node name="Starfield" type="Node2D" parent="." unique_id=294220916 instance=ExtResource("2_yyfjg")]
+
+[node name="UndergroundTileMap" type="Node2D" parent="." unique_id=1624396370]
 script = ExtResource("3_ow5a4")
 
-[node name="ForegroundTileMap" type="TileMapLayer" parent="UndergroundTileMap"]
+[node name="ForegroundTileMap" type="TileMapLayer" parent="UndergroundTileMap" unique_id=102027313]
 tile_set = ExtResource("3_6q06x")
 
-[node name="ObjectTileMap" type="TileMapLayer" parent="UndergroundTileMap"]
+[node name="ObjectTileMap" type="TileMapLayer" parent="UndergroundTileMap" unique_id=1354033952]
 tile_set = ExtResource("3_6q06x")
 
-[node name="Shop" parent="." instance=ExtResource("4_ow5a4")]
+[node name="Shop" parent="." unique_id=1180879888 instance=ExtResource("4_ow5a4")]
 
-[node name="Gas" parent="." instance=ExtResource("5_hujxm")]
+[node name="Gas" parent="." unique_id=515807969 instance=ExtResource("5_hujxm")]
 
-[node name="Player" parent="." instance=ExtResource("2_iuonh")]
+[node name="Player" parent="." unique_id=1223211043 instance=ExtResource("2_iuonh")]
 position = Vector2(106, 154)
 
-[node name="test" type="Sprite2D" parent="."]
+[node name="test" type="Sprite2D" parent="." unique_id=527046840]
 position = Vector2(8, 0)
 
-[node name="HUD" parent="." instance=ExtResource("5_6q06x")]
+[node name="HUD" parent="." unique_id=1579967016 instance=ExtResource("5_6q06x")]
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1725170208]
 volume_db = -5.0
 autoplay = true
 

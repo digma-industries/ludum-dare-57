@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/starfield/star_layer.gd" id="1_star"]
+
+[node name="Starfield" type="Node2D"]
+
+[node name="Far" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.05, 0.05)
+repeat_size = Vector2(480, 480)
+repeat_times = 2
+
+[node name="Stars" type="Node2D" parent="Far"]
+script = ExtResource("1_star")
+star_count = 140
+min_alpha = 0.15
+max_alpha = 0.45
+star_seed = 1
+
+[node name="Mid" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.15, 0.15)
+repeat_size = Vector2(480, 480)
+repeat_times = 2
+
+[node name="Stars" type="Node2D" parent="Mid"]
+script = ExtResource("1_star")
+star_count = 60
+min_alpha = 0.4
+max_alpha = 0.8
+star_seed = 2
+
+[node name="Near" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(480, 480)
+repeat_times = 2
+
+[node name="Stars" type="Node2D" parent="Near"]
+script = ExtResource("1_star")
+star_count = 20
+big_star_chance = 0.25
+min_alpha = 0.8
+star_seed = 3
